@@ -1,15 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { collection, addDoc } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  Unsubscribe,
+} from 'firebase/firestore';
 import { db } from './firebase.config';
+import { DBKEYS } from './constants';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  async addWallet(address: any, alias?: string): Promise<void> {
+    const dbWalletRef = collection(db, DBKEYS.wallets);
+    await addDoc(dbWalletRef, { walletAddress: address, alias: alias });
   }
-  async createDocument(identifier: string, data: any): Promise<void> {
-    console.log('db', db);
-    const dbRef = collection(db, identifier);
-    await addDoc(dbRef, data);
+  async getWallets(): Promise<Unsubscribe> {
+    const dbRef = collection(db, DBKEYS.wallets);
+    const wallets = await onSnapshot(dbRef, (docsSnap) => {
+      docsSnap.forEach((doc) => {
+        return doc.data();
+      });
+    });
+    return wallets;
   }
 }
