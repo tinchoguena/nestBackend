@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Unsubscribe } from 'firebase/firestore';
+import { DocumentData } from 'firebase/firestore';
 
-@Controller()
+@Controller('wallet')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
@@ -15,8 +15,8 @@ export class AppController {
     return { message: 'Wallet Added' };
   }
 
-  @Get('wallets')
-  async getWallets(): Promise<Unsubscribe> {
+  @Get('get-wallets')
+  async getWallets(): Promise<DocumentData[]> {
     const wallets = await this.appService.getWallets();
     return wallets;
   }
