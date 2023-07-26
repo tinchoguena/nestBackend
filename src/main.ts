@@ -7,7 +7,7 @@ import { initializeApp } from 'firebase/app';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   initializeApp(firebaseConfig);
-  const whitelist = ['https://localhost:3000', 'https://www.localhost:3000'];
+  const whitelist = ['http://localhost:3000', 'http://www.localhost:3000'];
   app.enableCors({
     origin: function (origin, callback) {
       if (whitelist.indexOf(origin) !== -1) {
