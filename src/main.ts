@@ -8,10 +8,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   initializeApp(firebaseConfig);
   const whitelist = ['http://localhost:3000', 'http://www.localhost:3000'];
-  app.enableCors({
-    origin: whitelist,
-    methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
-  });
+  // app.enableCors();
+  // app.enableCors({
+  //   // origin: whitelist,
+  //   allowedHeaders: ['content-type'],
+  //   methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
+  // });
   await app.listen(8081);
 }
 bootstrap();
